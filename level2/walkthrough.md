@@ -20,6 +20,7 @@ Now Using gdb, we find that there are 80 bytes needed to reach the return addres
 ```
 python -c "print 'A' * 80 + 'ABCD'" > /tmp/exploit
 ```
+
 ```
 (gdb) r < /tmp/exploit
 Starting program: /home/user/level2/level2 < /tmp/exploit
