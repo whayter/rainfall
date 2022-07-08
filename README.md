@@ -2,7 +2,7 @@
 
 * [x] level0
 * [x] level1
-* [ ] level2
+* [x] level2
 * [ ] level3
 * [ ] level4
 * [ ] level5
