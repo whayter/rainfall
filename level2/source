@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+void p(void)
+{
+    uint unaff_retaddr;
+    char buf[76];
+
+    fflush(stdout);
+    gets(buf);
+    if ((unaff_retaddr & 0xb0000000) == 0xb0000000)
+    {
+        printf("(%p)\n", unaff_retaddr);
+        exit(1);
+    }
+    puts(buf);
+    strdup(buf);
+    return ; 
+}
+
+int main(void)
+{
+    p();
+    return (0);
+}
