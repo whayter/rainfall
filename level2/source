@@ -2,14 +2,15 @@
 
 void p(void)
 {
-    uint unaff_retaddr;
+    unsigned int retaddr;
     char buf[76];
 
     fflush(stdout);
     gets(buf);
-    if ((unaff_retaddr & 0xb0000000) == 0xb0000000)
+    retaddr = __builtin_return_address(0);
+    if ((retaddr & 0xb0000000) == 0xb0000000)
     {
-        printf("(%p)\n", unaff_retaddr);
+        printf("(%p)\n", retaddr);
         exit(1);
     }
     puts(buf);
