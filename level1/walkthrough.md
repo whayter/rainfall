@@ -1,6 +1,6 @@
 There is an executable file named level1. Once started, the program waits for the user's input and then quits.
 
-Using gdb, we can see that the program has two functions: a main() and a run() function. The run() function displays a string on the standard output before launching a shell. The main() function records the user's input in a buffer with the gets() function. Check the [a relative link](source.c) file for more details.
+Using gdb, we can see that the program has two functions: a main() and a run() function. The run() function displays a string on the standard output before launching a shell. The main() function records the user's input in a buffer with the gets() function. Check the [source.c file](source.c) for more details.
 
 We note that the run function is never called. However, it should be possible to call it anyway, by exploiting the security hole of the gets() function. Indeed this function is vulnerable to buffer overflow attacks since the size of the input is never checked.
 
