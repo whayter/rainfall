@@ -4,9 +4,9 @@
 * [x] level1
 * [x] level2
 * [x] level3
-* [ ] level4
-* [ ] level5
-* [ ] level6
+* [x] level4
+* [x] level5
+* [x] level6
 * [ ] level7
 * [ ] level8
 * [ ] level9
