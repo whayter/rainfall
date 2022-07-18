@@ -8,8 +8,8 @@
 * [x] level5
 * [x] level6
 * [x] level7
-* [ ] level8
-* [ ] level9
+* [x] level8
+* [x] level9
 
 * [ ] bonus1
 * [ ] bonus2
