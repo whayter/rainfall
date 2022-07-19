@@ -2,7 +2,7 @@ The real difficulty here was to reconstruct the source code, which is a bit more
 
 The program contains an infinite loop in a main() function. First, the program displays the addresses of two global variables, auth and service, and then records the user's input in a buffer with fgets(). The following then differs depending on what is read from stdin. I won't detail the program here, because it is quite clear in the [source.c file](source.c).
 
-When the program is run, `(nil), (nil)` is displayed, which means that the variables auth and service are both null pointers. By filling in auth and service, we obtain the addresses of our two variables:
+When the program is running, `(nil), (nil)` is displayed, which means that the variables auth and service are both null pointers. By filling in auth and service, we obtain the addresses of our two variables:
 ```
 level8@RainFall:~$ ./level8 
 (nil), (nil) 
