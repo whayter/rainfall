@@ -1,6 +1,6 @@
 The decompiled program includes a main() function, an m() function and an n() function. The main() function first allocates 64 bytes to store its given parameter using strcpy(). A function pointer is also declared and allocated on the heap, and takes the address of m(). The m() function is then called in that way. The m() function is pretty useless, but the n() function does exactly what we want to do, that is to display the content of the file /home/user/level7/.pass. It is quite clear that our goal here is to force the program to call the n() function instead of the m() function, by exploiting the strcpy() vulnerability.
 
-All we have to do is find the offset of the function pointer on the heap, just as we did for some of the previous levels. Using gdb, we launch the program with a changing parameter size until we find the offset of our pointer to function. It appears tha the offset is 72 bytes.
+All we have to do is find the offset of the function pointer on the heap, just as we did for some of the previous levels. Using gdb, we run the program with a changing parameter size until we find the offset of the function pointer. It appears tha the offset is 72 bytes.
 
 All that remains is to forge the parameter passed to the program: the address of the n() function (0x08048454) must be passed according to the little endian convention after 72 padding characters:
 
