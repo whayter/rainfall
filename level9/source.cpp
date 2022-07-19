@@ -28,8 +28,8 @@ class N
 
 int main(int ac, char** av)
 {
-    if (ac < 2)                     			// main+10 - main+23
-        _exit(1);
+    if (ac < 2)                     			// main+10 - main+14
+        _exit(1);                               // main+16 - main+23
     N* a = new N(5);                			// main+28 - main+58
     N* b = new N(6);                			// main+62 - main+92
     a->setAnnotation(av[1]);        			// main+112 - main+131
