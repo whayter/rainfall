@@ -1,11 +1,12 @@
-The goal of this project is to get the content of the .pass file in the current directory of the top level.
+The goal of this project is to get the content, for each level, of the .pass file that is in the current directory of the upper level. We are currently at level0, so we want to get the content of the file /home/user/level1/.pass:
+
 ```
 level0@RainFall:~$ cat /home/user/level1/.pass
 cat: /home/user/level1/.pass: Permission denied
 ```
 Of course, that whould be too easy.
 
-We have an executable file named level0:
+There is an executable file named level0:
 ```
 level0@RainFall:~$ ./level0 
 Segmentation fault (core dumped)
@@ -29,4 +30,4 @@ $ cat /home/user/level1/.pass
 1fe8a524fa4bec01ca4ea2a869af2a02260d4a7d5fe7e7c24d8617e6dca12d3a
 ```
 
-We can go to the next level with the command `su level1` and fill in the flag found as a password.
+We can now reach the next level with the command `su level1` and fill in the flag found as a password.
