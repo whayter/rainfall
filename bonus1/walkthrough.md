@@ -17,7 +17,7 @@ Attempting to record a value outside the range would result in an erroneous resu
 
 To come back to the program, we will be able to exploit what we have just talked about to write more than 36 bytes in the buffer with memcpy(). By giving n a negative value, we respect the condition that n must be less than or equal to 9. When calling memcpy(), if n * 4 is out of range (i.e. less than -2147483648), then the result will be a positive value. 
 
-Since the buffer has a size of 40 bytes, and n has a size of 4 bytes, we want to be able to write 44 bytes to the buffer. To do this we need to pass as the first argument -2147483648 - (44 / 4), which is -2147483637. It only remains to fill the buffer with 40 bytes of padding, then to pass the value 0x574f4c4 in the little endian convention.
+Since the buffer has a size of 40 bytes, and n has a size of 4 bytes, we want to be able to write 44 bytes to the buffer. To do this we need to pass as the first argument -2147483648 + (44 / 4), which is -2147483637. It only remains to fill the buffer with 40 bytes of padding, then to pass the value 0x574f4c4 in the little endian convention.
 
 ## Exploit
 
