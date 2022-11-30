@@ -1,3 +1,5 @@
+## Context
+
 The goal of this project is to get the content, for each level, of the .pass file that is in the current directory of the upper level. We are currently at level0, so we want to get the content of the file /home/user/level1/.pass:
 
 ```
@@ -14,6 +16,8 @@ level0@RainFall:~$ ./level0 param
 No !
 ```
 
+## Lead
+
 Using gdb, we can see that the program makes a call to atoi() and then compares the resulting value with 423 (0x1a7):
 ```
 0x08048ed4 <+20>:    call   0x8049710 <atoi>
@@ -21,6 +25,8 @@ Using gdb, we can see that the program makes a call to atoi() and then compares 
 ```
 
 Later in the program, a call to execv with the command `/bin/sh` opens a shell after having defined the uid and the gid with setresgid() and setresuid().
+
+## exploit
 
 ```
 level0@RainFall:~$ ./level0 423
