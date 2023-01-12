@@ -1,7 +1,6 @@
 ## Context
 
 The goal of this project is to get the content, for each level, of the .pass file that is in the current directory of the upper level. We are currently at level0, so we want to get the content of the file /home/user/level1/.pass:
-
 ```
 level0@RainFall:~$ cat /home/user/level1/.pass
 cat: /home/user/level1/.pass: Permission denied

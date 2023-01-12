@@ -1,4 +1,8 @@
-This exercise is basically the same as for the previous level. We must set a global variable to a specific value so that the program displays the content of the /home/level5/.pass file. To do this, we can again exploit a badly formatted printf().
+## Context & lead
+
+This exercise is basically the same as for the previous level. We must set a global variable to a specific value so that the program displays the content of the /home/level5/.pass file. To do so, we can again exploit a badly formatted printf().
+
+## Exploit
 
 The global variable we want to reach is at 0x8049810 and must be equal to 0x1025544 (=16930116) (check the [source.c file](source.c) for more details).
 
@@ -20,4 +24,5 @@ printing 16930112 spaces twice, so it's a bit long...
 ...
 0f99ba5e9c446258a69b290407a6c60859e9c2d25b26575cafc9ae6d75e9456a
 ```
+
 We can now reach to the next level with the command `su level5` and fill in the flag found as a password.

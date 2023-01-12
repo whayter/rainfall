@@ -1,4 +1,8 @@
+## Context
+
 This exercise is similar to the previous one, except that this time the program makes a call to exit() and therefore never returns.
+
+## Lead
 
 But if we take a closer look at the exit() implementation, we see that the program jumps to an address: 0x8049838. So let's try to overwrite this address!
 ```
@@ -9,6 +13,8 @@ Dump of assembler code for function exit@plt:
    0x080483db <+11>:    jmp    0x8048370
 End of assembler dump.
 ```
+
+## Exploit
 
 We will need to find the address of the o() function and the offset of the buffer in the stack. Using gdb (`info functions`), we find the address of the o() function: 0x080484a4, which is 134513828 in decimal. Finally, we find that the offset of the buffer in the stack is 4, following the same method as for the previous levels. 
 
