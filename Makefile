@@ -26,7 +26,7 @@ rainfall: rainfall-iso
 	trap 'rm -rf "$$workdir"' EXIT; \
 	($(RAINFALL_RUNNER) $(RAINFALL_QEMU) -name Rainfall -machine pc,accel=$(RAINFALL_ACCEL) -m 512 \
 		-cdrom "$(RAINFALL_ISO)" -boot d -display gtk \
-		-nic user,model=pcnet,hostfwd=tcp:127.0.0.1:$(RAINFALL_SSH_PORT)-:22; \
+		-nic user,model=pcnet,hostfwd=tcp:127.0.0.1:$(RAINFALL_SSH_PORT)-:4242; \
 		printf '%s\n' "$$?" > "$$workdir/status") 2>&1 | tee "$$workdir/output"; \
 	status=$$(cat "$$workdir/status") || exit 1; \
 	if [ "$$status" -eq 0 ]; then exit 0; fi; \
