@@ -22,6 +22,20 @@ rainfall-iso:
 
 rainfall: rainfall-iso
 	@printf '%s\n' 'SSH after boot: ssh -p $(RAINFALL_SSH_PORT) level0@127.0.0.1' 'Close the QEMU window to stop the VM.'
-	@$(RAINFALL_RUNNER) $(RAINFALL_QEMU) -name Rainfall -machine pc,accel=$(RAINFALL_ACCEL) -m 512 \
+	@workdir=$$(mktemp -d) || exit 1; \
+	trap 'rm -rf "$$workdir"' EXIT; \
+	($(RAINFALL_RUNNER) $(RAINFALL_QEMU) -name Rainfall -machine pc,accel=$(RAINFALL_ACCEL) -m 512 \
 		-cdrom "$(RAINFALL_ISO)" -boot d -display gtk \
-		-nic user,model=pcnet,hostfwd=tcp:127.0.0.1:$(RAINFALL_SSH_PORT)-:22
+		-nic user,model=pcnet,hostfwd=tcp:127.0.0.1:$(RAINFALL_SSH_PORT)-:22; \
+		printf '%s\n' "$$?" > "$$workdir/status") 2>&1 | tee "$$workdir/output"; \
+	status=$$(cat "$$workdir/status") || exit 1; \
+	if [ "$$status" -eq 0 ]; then exit 0; fi; \
+	if grep -q 'Could not set up host forwarding rule' "$$workdir/output"; then \
+		printf '\n%s\n' \
+			'Cannot forward SSH on localhost:$(RAINFALL_SSH_PORT). The port may already be in use.' \
+			'If Rainfall is already running, connect: ssh -p $(RAINFALL_SSH_PORT) level0@127.0.0.1' \
+			'Otherwise close the existing VM or choose another port: make run RAINFALL_SSH_PORT=4243'; \
+	else \
+		printf '\nRainfall failed to start or exited with error %s. See QEMU output above.\n' "$$status"; \
+	fi; \
+	exit "$$status"
